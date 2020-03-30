@@ -1,0 +1,2 @@
+word=apple meaning=sdjf
+word=q meaning=qwer

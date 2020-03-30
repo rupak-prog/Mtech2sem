@@ -1,0 +1,233 @@
+1 chooses x
+time=0 x=0 y=0 z=05 chooses x
+2 chooses z
+1 chooses x
+3 chooses x
+4 chooses z
+time=1 x=3 y=0 z=21 chooses y
+3 chooses y
+2 chooses y
+4 chooses y
+1 chooses z
+time=2 x=3 y=2 z=23 chooses z
+2 chooses z
+4 chooses x
+1 chooses x
+time=3 x=3 y=4 z=43 chooses x
+1 chooses y
+time=4 x=6 y=4 z=53 chooses y
+2 chooses y
+1 chooses z
+4 chooses z
+time=5 x=6 y=6 z=53 chooses z
+1 chooses x
+5 chooses z
+time=6 x=6 y=7 z=83 chooses x
+4 chooses z
+1 chooses x
+time=0 x=0 y=0 z=0
+5 chooses x
+2 chooses z
+time=1 x=3 y=0 z=2
+3 chooses y
+1 chooses y
+time=2 x=3 y=2 z=2
+2 chooses y
+4 chooses y
+3 chooses z
+1 chooses z
+time=3 x=3 y=4 z=4
+3 chooses x
+1 chooses x
+2 chooses z
+4 chooses x
+time=4 x=6 y=4 z=5
+3 chooses y
+1 chooses y
+2 chooses y
+4 chooses z
+1 chooses z
+time=5 x=6 y=6 z=5
+3 chooses z
+5 chooses z
+1 chooses x
+time=6 x=6 y=7 z=8
+time=0 x=0 y=0 z=0
+4 chooses z
+2 chooses z
+1 chooses x
+3 chooses x
+5 chooses x
+time=1 x=3 y=0 z=2
+3 chooses y
+1 chooses y
+time=2 x=3 y=2 z=2
+1 chooses z
+3 chooses z
+2 chooses y
+4 chooses y
+time=3 x=3 y=4 z=4
+4 chooses x
+3 chooses x
+1 chooses x
+2 chooses z
+time=4 x=6 y=4 z=5
+3 chooses y
+1 chooses y
+time=5 x=6 y=6 z=5
+2 chooses y
+4 chooses z
+1 chooses z
+3 chooses z
+time=6 x=6 y=7 z=8
+1 chooses x
+5 chooses z
+time=7 x=7 y=7 z=9
+time=0 x=0 y=0 z=0
+4 chooses z
+2 chooses z
+3 chooses x
+1 chooses x
+5 chooses x
+time=1 x=3 y=0 z=2
+time=1 x=3 y=0 z=2
+1 chooses y
+3 chooses y
+5 chooses x
+4 chooses z
+time=2 x=3 y=2 z=2
+time=2 x=3 y=2 z=2
+2 chooses y
+4 chooses y
+3 chooses z
+1 chooses z
+time=3 x=3 y=4 z=4
+time=2 x=3 y=2 z=2
+2 chooses z
+3 chooses x
+4 chooses x
+1 chooses x
+time=4 x=6 y=4 z=5
+time=2 x=3 y=2 z=2
+2 chooses z
+4 chooses x
+1 chooses y
+3 chooses y
+time=5 x=6 y=6 z=5
+3 chooses z
+2 chooses y
+time=2 x=3 y=2 z=2
+4 chooses z
+1 chooses z
+time=6 x=6 y=7 z=8
+1 chooses x
+3 chooses z
+2 chooses y
+4 chooses z
+5 chooses z
+time=7 x=7 y=7 z=9
+time=0 x=0 y=0 z=0
+5 chooses x
+1 chooses x
+3 chooses x
+4 chooses z
+2 chooses z
+time=1 x=3 y=0 z=2
+2 chooses z
+5 chooses x
+3 chooses y
+1 chooses y
+4 chooses z
+time=2 x=3 y=2 z=2
+4 chooses y
+5 chooses x
+1 chooses z
+3 chooses z
+2 chooses y
+time=3 x=3 y=4 z=4
+2 chooses z
+5 chooses x
+4 chooses x
+1 chooses x
+3 chooses x
+time=4 x=6 y=4 z=5
+5 chooses x
+3 chooses y
+1 chooses y
+4 chooses x
+2 chooses z
+time=5 x=6 y=6 z=5
+5 chooses x
+3 chooses z
+1 chooses z
+4 chooses z
+2 chooses y
+time=6 x=6 y=7 z=8
+3 chooses z
+5 chooses z
+1 chooses x
+4 chooses z
+2 chooses y
+time=7 x=7 y=7 z=9
+time=0 x=0 y=0 z=0
+2 chooses z
+1 chooses x
+5 chooses x
+4 chooses z
+3 chooses x
+time=1 x=3 y=0 z=2
+1 chooses y
+3 chooses y
+time=2 x=3 y=2 z=2
+3 chooses z
+2 chooses y
+4 chooses y
+1 chooses z
+time=3 x=3 y=4 z=4
+2 chooses z
+4 chooses x
+1 chooses x
+3 chooses x
+time=4 x=6 y=4 z=5
+3 chooses y
+1 chooses y
+time=5 x=6 y=6 z=5
+1 chooses z
+2 chooses y
+4 chooses z
+3 chooses z
+time=6 x=6 y=7 z=8
+5 chooses z
+1 chooses x
+time=7 x=7 y=7 z=9
+time=0 x=0 y=0 z=0
+4 chooses z
+1 chooses x
+2 chooses z
+5 chooses x
+3 chooses x
+time=1 x=3 y=0 z=2
+1 chooses y
+3 chooses y
+time=2 x=3 y=2 z=2
+2 chooses y
+4 chooses y
+3 chooses z
+1 chooses z
+time=3 x=3 y=4 z=4
+2 chooses z
+3 chooses x
+1 chooses x
+4 chooses x
+time=4 x=6 y=4 z=5
+3 chooses y
+1 chooses y
+time=5 x=6 y=6 z=5
+3 chooses z
+4 chooses z
+1 chooses z
+2 chooses y
+time=6 x=6 y=7 z=8
+1 chooses x
+5 chooses z
+time=7 x=7 y=7 z=9
