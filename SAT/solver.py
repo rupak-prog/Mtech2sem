@@ -26,7 +26,6 @@ def unit_propagation(List):
 				clause -= 1
 				size -= 1
 			clause += 1
-			print(sorted_list)
 		sorted_list = list(sorted(sorted_list,key=len))
 	if(len(sorted_list)==0): return [],list_of_true_literals
 	return sorted_list,list_of_true_literals
@@ -45,7 +44,7 @@ def pure_literal_elimination(formula):
 			formula.pop(j)
 			size -= 1
 		else: j += 1
-	return formula
+	return formula,to_remove
 
 def findNewFormula(formula,lit):
 	size = len(formula)
@@ -70,7 +69,7 @@ def findNewFormula(formula,lit):
 		clause += 1
 	return formula
 
-def dpll_algorithm(formula):
+def dpll_algorithm(formula, result, literal_count):
 	formula,result1 = pure_literal_elimination(formula)
 	formula,result2 = unit_propagation(formula)
 	if(formula == [0]): return []
@@ -78,25 +77,22 @@ def dpll_algorithm(formula):
 	result.extend(result1)
 	if(len(result) == literal_count): return result
 	if(len(formula) == 0): return []
-	unassiged  = list(set(unassiged).difference(set(result1)))
-	size = len(unassiged)
-	for i in range(size):
+	for i in range(len(formula[0])):
+		newFormula = formula[1:]
 		newResult = result[:]
-		newResult.append(unassiged[i])
-		newUnassigned = unassiged[:]
-		newFormula = findNewFormula(formula,unassiged[i])
-		newUnassigned.pop(i)
-		temp = dpll_algorithm(newFormula, newUnassigned, newResult, literal_count)
+		newResult.append(formula[0][i])
+		newFormula = findNewFormula(newFormula,formula[0][i])
+		temp = dpll_algorithm(newFormula, newResult, literal_count)
 		if(len(temp) == literal_count): return temp 
 		newResult = result[:]
-		newResult.append(-unassiged[i])
-		newUnassigned = unassiged[:]
-		newFormula = findNewFormula(formula,-unassiged[i])
-		newUnassigned.pop(i)
-		temp = dpll_algorithm(newFormula, newUnassigned, newResult, literal_count)
+		newResult.append(-formula[0][i])
+		newFormula = formula[1:]
+		newFormula = findNewFormula(newFormula,-formula[0][i])
+		temp = dpll_algorithm(newFormula, newResult, literal_count)
 		if(len(temp) == literal_count): return temp
+	return []
 
-def preprocessing(formula,literal_count):
+def preprocessing(formula,literal_count,):
 	size = len(formula)
 	clause = 0
 	while clause < size:
@@ -124,8 +120,11 @@ def preprocessing(formula,literal_count):
 		clause += 1
 	return formula
 
+def clauseLearning():
+	pass
+
 #Main program starts here
-file1 = open('c2.txt', 'r') 
+file1 = open('c5.txt', 'r') 
 Lines = file1.readlines()   
 count = 0 
 literal_count = 0
@@ -144,8 +143,11 @@ result = []
 for i in range(1,literal_count+1):
 	unassiged.append(i)
 formula = preprocessing(formula,literal_count)
-print(formula)
-#solution = dpll_algorithm(formula, unassiged, result, literal_count)
-#print(solution)
+#print(formula)
+solution = dpll_algorithm(formula, result, literal_count)
+if(solution == []): print("Unsatisfiable")
+else:
+	print("Satisfiable SAT")
+	print(solution)
 
 
