@@ -30,7 +30,6 @@ class SATSolverCDCL:
         self.kappa_antecedent = -1
         self.pick_counter = 0
         self.already_unsatisfied = False
-        formula = []
         for line in Lines: 
             if(count == 0):
                 l = line.split()
@@ -42,7 +41,7 @@ class SATSolverCDCL:
                 self.literal_antecedent = [-1] * literal_count
                 self.literal_decision_level = [-1] * literal_count
                 self.literal_list_per_clause = [[] for _ in range(clause_count)]
-                #print(self.literal_list_per_clause)
+                ##print(self.literal_list_per_clause)
             else:
                 literal_count_in_clause = 0
                 clause = list(map(int, line.split()))
@@ -61,30 +60,38 @@ class SATSolverCDCL:
                         break
                     literal_count_in_clause += 1
             count+=1
-        #print(self.literal_frequency)
-        #print(self.literal_polarity)
+        ##print(self.literal_frequency)
+        ##print(self.literal_polarity)
+        ##print(self.literal_list_per_clause)
         self.original_literal_frequency = self.literal_frequency
 
     def CDCL(self):
+    	#print("inside cdcl")
         decision_level = 0
         if(self.already_unsatisfied):
             return RetVal.r_unsatisfied
         unit_propagate_result = self.unit_propagate(decision_level)
+        #print("unit{}".format(unit_propagate_result))
+        #print(RetVal.r_normal == RetVal.r_normal)
         if unit_propagate_result == RetVal.r_unsatisfied:
             return unit_propagate_result
+        count = 0
         while not self.all_variables_assigned():
-            picked_variable = self.pick_branching_variable()
+            picked_variable = count
+            #print(picked_variable)
             decision_level += 1
             self.assign_literal(picked_variable, decision_level, -1)
-
+            if(count == 3): break
             while True:
                 unit_propagate_result = self.unit_propagate(decision_level)
+                #print(unit_propagate_result)
                 if(unit_propagate_result == RetVal.r_unsatisfied):
                     if(decision_level == 0):
                         return unit_propagate_result
                     decision_level = self.conflict_analysis_and_backtrack(decision_level)
                 else:
                     break
+            count += 1
         return RetVal.r_satisfied
 
     def literal_to_variable_index(self,variable):
@@ -94,6 +101,7 @@ class SATSolverCDCL:
     
 
     def unit_propagate(self,decision_level):
+    	#print("inside unit_propagate")
         unit_clause_found = False
         false_count = 0
         unset_count = 0
@@ -135,6 +143,7 @@ class SATSolverCDCL:
 
 
     def assign_literal(self,variable, decision_level, antecedent):
+        #print("inside assign_literal")
         literal = self.literal_to_variable_index(variable)
         value = int(variable > 0)
         self.literals[literal] = value
@@ -144,6 +153,7 @@ class SATSolverCDCL:
         self.assigned_literal_count += 1
 
     def unassign_literal(self,literal_index):
+    	#print("inside unassign_literal")
         self.literals[literal_index] = -1               
         self.literal_decision_level[literal_index] = -1 
         self.literal_antecedent[literal_index] = -1     
@@ -152,8 +162,9 @@ class SATSolverCDCL:
 
 
     def conflict_analysis_and_backtrack(self,decision_level):
+        #print("inside conflict_analysis_and_backtrack")
         learnt_clause = self.literal_list_per_clause[self.kappa_antecedent]
-        conflict_decision_level = self.decision_level
+        conflict_decision_level = decision_level
         this_level_count = 0
         resolver_literal = 0
         literal = 0
@@ -163,7 +174,7 @@ class SATSolverCDCL:
                 literal = self.literal_to_variable_index(learnt_clause[i])
                 if (self.literal_decision_level[literal] == conflict_decision_level):
                     this_level_count += 1
-                if (literal_decision_level[literal] == conflict_decision_level and literal_antecedent[literal] != -1):
+                if (self.literal_decision_level[literal] == conflict_decision_level and self.literal_antecedent[literal] != -1):
                     resolver_literal = literal
             if this_level_count == 1:
                 break
@@ -180,28 +191,29 @@ class SATSolverCDCL:
 
             if self.literal_frequency[literal_index] != -1:
                 self.literal_frequency[literal_index] += 1
-              	self.original_literal_frequency[literal_index] += 1
+            self.original_literal_frequency[literal_index] += 1
         self.clause_count += 1
 
         backtracked_decision_level = 0
         for i in range(len(learnt_clause)):
             literal_index = self.literal_to_variable_index(learnt_clause[i])
-            decision_level_here = literal_decision_level[literal_index]
+            decision_level_here = self.literal_decision_level[literal_index]
 
             if (decision_level_here != conflict_decision_level and decision_level_here > backtracked_decision_level):
                 backtracked_decision_level = decision_level_here
 
         for i in range(len(literals)):
-            if (literal_decision_level[i] > backtracked_decision_level):
+            if (self.literal_decision_level[i] > backtracked_decision_level):
                 self.unassign_literal(i)
 
         return backtracked_decision_level
 
     def resolve(self,input_clause,literal):
+    	##print("inside resolve")
         second_input = self.literal_list_per_clause[self.literal_antecedent[literal]]
         input_clause.extend(second_input)
         for i in range(len(input_clause)):
-            if (input_clause[i] == literal + 1 or input_clause[i] == -literal - 1):
+            if((input_clause[i] == literal + 1) or (input_clause[i] == -literal - 1)):
                 input_clause.pop(i)
                 i -= 1
         input_clause = sorted(input_clause)
@@ -209,6 +221,7 @@ class SATSolverCDCL:
         return input_clause
 
     def pick_branching_variable(self):
+    	#print("inside pick_branching_variable")
         random_value = random.randint(1,10)
         too_many_attempts = False
         attempt_counter = 0
@@ -216,7 +229,7 @@ class SATSolverCDCL:
         while True:
             if (random_value > 4 or self.assigned_literal_count < self.literal_count / 2 or too_many_attempts):
                 self.pick_counter += 1;
-                #print(type(self.pick_counter),type(self.literal_count))
+                ##print(type(self.pick_counter),type(self.literal_count))
                 if (self.pick_counter == 20 * self.literal_count):
                     for i in range(len(self.literals)):
                         self.original_literal_frequency[i] /= 2
@@ -229,10 +242,10 @@ class SATSolverCDCL:
                 if( self.literal_polarity[variable] >= 0):
                     return variable + 1
                 return -variable - 1
-                print("not returned") 
+                ##print("not returned") 
             else:
                 while attempt_counter < 10 * self.literal_count:
-                    variable = random.randint(0,self.literal_count)
+                    variable = random.randint(0,self.literal_count-1)
                     if(self.literal_frequency[variable] != -1):
                         if(self.literal_polarity[variable] >= 0):
                             return variable + 1
