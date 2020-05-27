@@ -106,12 +106,13 @@ def found_in_result(result,lit):
 
 def dpll_algorithm(formula,literal_count,unassigned,result):
 
+
     if(len(result) == literal_count): return result
     formula,result1 = unit_propagation(formula)
     result.extend(result1)
 
-    if(len(result) == literal_count): return result
     if(formula == [0]): return []
+    if(len(result) == literal_count): return result
 
     formula = toTuple(formula)
     if(len(formula) == 0): return result
@@ -161,8 +162,9 @@ def dpll_algorithm(formula,literal_count,unassigned,result):
             if(len(temp) == literal_count): 
                 result = temp
                 return result
-        elif (not found_in_result(result,unassiged[i])):
-            #print("not found= {}{}{}{}".format(formula,unassiged[i],result,unassiged))
+        elif (not found_in_result(result,unassigned[i])):
+            
+            #print("not found= {}".format(result))
             newResult = result[:]
             newResult.append(unassigned[i])
             newUnassigned = unassigned[:]
@@ -205,7 +207,7 @@ def preprocessing(formula,literal_count):
 
 
 #Main program starts here
-file1 = open('c14.cnf', 'r') 
+file1 = open('test1/us1.cnf', 'r') 
 Lines = file1.readlines()   
 count = 0 
 literal_count = 0
@@ -235,11 +237,11 @@ const_formula = tuple(const_formula)
 
 if(flag == False):
     const_formula = preprocessing(const_formula,literal_count)
-    print(const_formula)
-    # solution = dpll_algorithm(const_formula, literal_count, unassiged, result)
-    # if(solution == []): print("Unsatisfiable")
-    # else: 
-    #     print("Satisfiable SAT")
-    #     print(solution)
+    #print(const_formula)
+    solution = dpll_algorithm(const_formula, literal_count, unassiged, result)
+    if(solution == []): print("Unsatisfiable")
+    else: 
+        print("Satisfiable SAT")
+        print(solution)
 else:
     print("Unsatisfiable")
