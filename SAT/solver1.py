@@ -99,6 +99,11 @@ def toTuple(formula):
     const_formula = tuple(const_formula)
     return const_formula
 
+def found_in_result(result,lit):
+    for literal in result:
+        if(literal==lit or literal==-lit): return True
+    return False
+
 def dpll_algorithm(formula,literal_count,unassigned,result):
 
     if(len(result) == literal_count): return result
@@ -156,8 +161,8 @@ def dpll_algorithm(formula,literal_count,unassigned,result):
             if(len(temp) == literal_count): 
                 result = temp
                 return result
-        else:
-            #print("not found= {}".format(unassiged[i]))
+        elif (not found_in_result(result,unassiged[i])):
+            #print("not found= {}{}{}{}".format(formula,unassiged[i],result,unassiged))
             newResult = result[:]
             newResult.append(unassigned[i])
             newUnassigned = unassigned[:]
@@ -169,8 +174,38 @@ def dpll_algorithm(formula,literal_count,unassigned,result):
             #print("temp = {}".format(temp))
     return []
 
+def preprocessing(formula,literal_count):
+    formula = toList(formula)
+    size = len(formula)
+    clause = 0
+    while clause < size:
+        count = []
+        i = 0
+        for i in range(literal_count):
+            count.append(0)
+        formula[clause] = list(set(formula[clause]))
+        size1 = len(formula[clause])
+        literal = 0
+        while literal < size1:
+            if(formula[clause][literal] < 0):
+                count[abs(formula[clause][literal])-1] += 1
+            else: count[formula[clause][literal]-1] += 1
+            literal += 1
+        flag = False
+        for j in range(literal_count):
+            if(count[j] > 1):
+                flag = True
+                break
+        if(flag == True):
+            size -= 1
+            formula.pop(clause)
+            clause -= 1
+        clause += 1
+    return toTuple(formula)
+
+
 #Main program starts here
-file1 = open('c10.txt', 'r') 
+file1 = open('c14.cnf', 'r') 
 Lines = file1.readlines()   
 count = 0 
 literal_count = 0
@@ -188,15 +223,23 @@ unassiged = []
 result = []
 for i in range(1,literal_count+1):
     unassiged.append(i)
-#formula = preprocessing(formula,literal_count)
 #print(formula)
 const_formula = []
+flag = False
 for clause in formula:
-    const_formula.append(tuple(clause))
+    if(len(tuple(clause[:-1])) == 0): 
+        flag = True
+        break
+    const_formula.append(tuple(clause[:-1]))
 const_formula = tuple(const_formula)
-solution = dpll_algorithm(const_formula, literal_count, unassiged, result)
-if(solution == []): print("Unsatisfiable")
+
+if(flag == False):
+    const_formula = preprocessing(const_formula,literal_count)
+    print(const_formula)
+    # solution = dpll_algorithm(const_formula, literal_count, unassiged, result)
+    # if(solution == []): print("Unsatisfiable")
+    # else: 
+    #     print("Satisfiable SAT")
+    #     print(solution)
 else:
-    print("Satisfiable SAT")
-    print(solution)
-    
+    print("Unsatisfiable")
